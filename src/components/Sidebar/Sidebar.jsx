@@ -1,36 +1,40 @@
-import { Avatar, Box, Flex, Link, Tooltip } from "@chakra-ui/react";
+import { Avatar, Box, Button, Flex, Link, Text, Tooltip } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import { CreatePostLogo, InstagramLogo, InstagramMobileLogo, NotificationsLogo, SearchLogo } from "../../assets/constants";
 import { BiLogOut } from "react-icons/bi";
 import { AiFillHome } from "react-icons/ai";
+import { useAuth } from "../../contexts/AuthContext";
+// import useSignout from "../../hooks/useSignout"; // decided not to use this hook
 
 
 const Sidebar = () => {
 
-    const sidebarItems = [
-        {
-            icon: <AiFillHome size={25} />,
-            text: "Home",
-            link: "/",
-        },
-        {
-            icon: <SearchLogo />,
-            text: "Search"
-        },
-        {
-            icon: <NotificationsLogo />,
-            text: "Notifications"
-        },
-        {
-            icon: <CreatePostLogo />,
-            text: "Create Post"
-        },
-        {
-            icon: <Avatar size={"sm"} name="Roger Galan" src="profilepic.png" />,
-            text: "Profile",
-            link: "/asaprogrammer"
-        }
-    ]
+  const { signOut } = useAuth();
+
+  const sidebarItems = [
+      {
+          icon: <AiFillHome size={25} />,
+          text: "Home",
+          link: "/",
+      },
+      {
+          icon: <SearchLogo />,
+          text: "Search"
+      },
+      {
+          icon: <NotificationsLogo />,
+          text: "Notifications"
+      },
+      {
+          icon: <CreatePostLogo />,
+          text: "Create Post"
+      },
+      {
+          icon: <Avatar size={"sm"} name="Roger Galan" src="profilepic.png" />,
+          text: "Profile",
+          link: "/asaprogrammer"
+      }
+  ]
 
   return (
     <Box
@@ -66,6 +70,7 @@ const Sidebar = () => {
         >
           <InstagramMobileLogo />
         </Link>
+
         <Flex direction={"column"} gap={5} cursor={"pointer"}>
           {sidebarItems.map((item, index) => (
             <Tooltip
@@ -95,6 +100,8 @@ const Sidebar = () => {
             </Tooltip>
           ))}
         </Flex>
+
+        {/* LOGOUT SECTION */}
         <Tooltip
               hasArrow
               label={"Logout"}
@@ -103,20 +110,33 @@ const Sidebar = () => {
               openDelay={500}
               display={{ base: "block", md: "none" }}
             >
-              <Link
+              {/* <Link
                 display={"flex"}
-                to={"/auth"}
-                as={RouterLink}
+                // to={"/auth"}
+                // as={RouterLink}
                 alignItems={"center"}
                 gap={4}
                 _hover={{ bg: "whiteAlpha.400" }}
                 borderRadius={6}
                 p={2}
                 w={{ base: 10, md: "full" }}
-              >
+              > */}
+                <Button display={"flex"}
+                  variant={"ghost"}
+                  // _hover={{bg:"transparent"}}
+                  justifyContent={{base:"center", md:"flex-start"}}
+                  onClick={signOut}
+                  alignItems={"center"}
+                  gap={4}
+                  _hover={{ bg: "whiteAlpha.400" }}
+                  borderRadius={6}
+                  p={2}
+                  w={{ base: 10, md: "full" }}
+                >
                 <BiLogOut size={25} />
-                <Box display={{ base: "none", md: "block" }}></Box>
-              </Link>
+                  <Box display={{ base: "none", md: "block" }} color={"whiteAlpha.800"}>Log Out</Box>
+                  </Button>
+              {/* </Link> */}
             </Tooltip>
       </Flex>
     </Box>

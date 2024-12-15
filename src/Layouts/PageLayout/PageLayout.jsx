@@ -1,26 +1,45 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, Spinner } from '@chakra-ui/react';
 import Sidebar from '../../components/Sidebar/Sidebar.jsx';
 import { useLocation } from 'react-router-dom';
-
+import { useAuth } from '../../contexts/AuthContext.jsx';
+import Navbar from '../../components/Navbar/Navbar.jsx';
 
 const PageLayout = ({children}) => {
-    const {pathname} = useLocation()
+    const { pathname } = useLocation()
+    const { user, loading } = useAuth();
+    const canRenderSidebar = pathname !== "/auth" && user;
+    const canRenderNavbar = !user && !loading && pathname !== "/auth"; 
+
+    const checkingUserIsAuth = !user && loading; // should be session instead of user?
+    if (checkingUserIsAuth) return <PageLayoutSpinner />;
+
     return (
-        <Flex>
+        <Flex flexDir={canRenderNavbar ? "column" : "row"}>
             {/* {Sidebar on the left} */}
-            {pathname !== "/auth" ? (
+            {canRenderSidebar ? (
                 <Box w={{base:"70px", md:"240px"}}>
-                <Sidebar />
+                    <Sidebar />
                 </Box>
             ) : null}
+
+            {/* Navbar at the top? */}
+            {canRenderNavbar ? <Navbar /> : null}
+
             {/* Page content on the right */}
-
-        <Box flex={1} w={{base:"calc(100% - 70px", md:"calc(100% - 240px"}} >
-        {children}
-
-        </Box>
+            <Box flex={1} w={{base:"calc(100% - 70px)", md:"calc(100% - 240px)"}} mx={"auto"}>
+                {children}
+            </Box>
         </Flex>
   )
 }
 
 export default PageLayout;
+
+
+const PageLayoutSpinner = () => {
+    return (
+		<Flex flexDir='column' h='100vh' alignItems='center' justifyContent='center'>
+			<Spinner size='xl' />
+		</Flex>
+	);
+};
