@@ -3,25 +3,25 @@ import supabase from "../config/supabaseClient";
 import { useAuth } from "./AuthContext";
 
 const UserProfileContext = createContext({
-  profile: null,
+  authProfile: null,
   loading: true,
   error: null,
   refreshProfile: () => {},
 });
 
 export const UserProfileProvider = ({ children }) => {
-  const { user } = useAuth(); // From AuthContext
-  const [profile, setProfile] = useState(null);
+  const { authUser } = useAuth(); // From AuthContext
+  const [authProfile, setAuthProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch user profile from the database
+  // Fetch user authProfile from the database
   const fetchUserProfile = async () => {
     setLoading(true);
     setError(null);
 
-    if (!user) {
-      setProfile(null);
+    if (!authUser) {
+      setAuthProfile(null);
       setLoading(false);
       return;
     }
@@ -30,12 +30,12 @@ export const UserProfileProvider = ({ children }) => {
       const { data, error } = await supabase
         .from("user_profile")
         .select("*")
-        .eq("user_profile_id", user.id) // Match auth user ID with user_profile primary key
+        .eq("user_profile_id", authUser.id) // Match auth user ID with user_profile primary key
         .single();
 
       if (error) throw error;
 
-      setProfile(data); // Set the profile in state
+      setAuthProfile(data); // Set the authProfile in state
     } catch (err) {
       setError(err.message);
     } finally {
@@ -43,29 +43,29 @@ export const UserProfileProvider = ({ children }) => {
     }
   };
 
-  // Refresh profile on user change or manual trigger
+  // Refresh authProfile on user change or manual trigger
 
-  // If profile already exists in local storage, set that as profile state, else get it from supabase
+  // If authProfile already exists in local storage, set that as authProfile state, else get it from supabase
   useEffect(() => {
     const cachedProfile = localStorage.getItem("user_profile");
     if (cachedProfile) {
-      setProfile(JSON.parse(cachedProfile));
+      setAuthProfile(JSON.parse(cachedProfile));
       setLoading(false);
     } else {
       fetchUserProfile();
     }
-  }, [user]);
+  }, [authUser]);
 
-  // If the profile data is retrieved from supabase, add it to local storage
+  // If the authProfile data is retrieved from supabase, add it to local storage
   useEffect(() => {
-    if (profile) {
-      localStorage.setItem("user_profile", JSON.stringify(profile));
+    if (authProfile) {
+      localStorage.setItem("user_profile", JSON.stringify(authProfile));
     }
-  }, [profile]);
+  }, [authProfile]);
   
 
   const value = {
-    profile,
+    authProfile,
     loading,
     error,
     refreshProfile: fetchUserProfile,
@@ -78,6 +78,6 @@ export const UserProfileProvider = ({ children }) => {
   );
 };
 
-export const useUserProfile = () => {
+export const useAuthUserProfile = () => {
   return useContext(UserProfileContext);
 };

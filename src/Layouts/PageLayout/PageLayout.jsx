@@ -6,11 +6,11 @@ import Navbar from '../../components/Navbar/Navbar.jsx';
 
 const PageLayout = ({children}) => {
     const { pathname } = useLocation()
-    const { user, loading } = useAuth();
-    const canRenderSidebar = pathname !== "/auth" && user;
-    const canRenderNavbar = !user && !loading && pathname !== "/auth"; 
+    const { authUser, loading } = useAuth();
+    const canRenderSidebar = pathname !== "/auth" && authUser;
+    const canRenderNavbar = !authUser && !loading && pathname !== "/auth"; 
 
-    const checkingUserIsAuth = !user && loading; // should be session instead of user?
+    const checkingUserIsAuth = !authUser && loading; // should be session instead of authUser?
     if (checkingUserIsAuth) return <PageLayoutSpinner />;
 
     return (

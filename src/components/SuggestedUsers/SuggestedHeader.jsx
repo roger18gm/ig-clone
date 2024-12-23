@@ -1,16 +1,16 @@
 import { Avatar, Button, Flex, Text} from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { useUserProfile } from "../../contexts/userProfileContext";
+import { useAuthUserProfile } from "../../contexts/userProfileContext";
 
 const SuggestedHeader = () => {
 
   const { signOut } = useAuth(); // supabase signout function
-  const { profile } = useUserProfile(); // signed-in users profile data
+  const { authProfile } = useAuthUserProfile(); // signed-in users authProfile data
 
-  // Alternatively could implement this solution instead so that the component doesn't error when loading the profile.username as null
-  // if (loading || !profile) {
-  //   // Optionally, return a loading spinner or placeholder while profile is being fetched
+  // Alternatively could implement this solution instead so that the component doesn't error when loading the authProfile.username as null
+  // if (loading || !authProfile) {
+  //   // Optionally, return a loading spinner or placeholder while authProfile is being fetched
   //   return <Text>Loading...</Text>;
   // }
 
@@ -18,15 +18,15 @@ const SuggestedHeader = () => {
     <Flex justifyContent={"space-between"} alignItems={"center"} w={"full"}>
         <Flex alignItems={"center"} gap={2}>
 
-            {/* Image avatar link to profile */}
-            <Link to={`${profile?.username || ""}`}>
-                <Avatar size={"lg"} src={profile?.profile_pic_url} />
+            {/* Image avatar link to authProfile */}
+            <Link to={`${authProfile?.username || ""}`}>
+                <Avatar size={"lg"} src={authProfile?.profile_pic_url} />
             </Link>
 
-            {/* Username link to profile */}
-            <Link to={`${profile?.username || ""}`}>   
+            {/* Username link to authProfile */}
+            <Link to={`${authProfile?.username || ""}`}>   
                 <Text fontSize={12} fontWeight={"bold"}>
-                    {profile?.username || "User"}
+                    {authProfile?.username || "User"}
                 </Text>
             </Link>
         </Flex>

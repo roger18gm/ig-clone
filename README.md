@@ -10,7 +10,7 @@ Currently, two official plugins are available:
 
 npm run dev
 ctrl c 
-4:18:00
+4:55:00
 
 Front End Resources
 https://github.com/burakorkmez/instagram-clone/tree/master/src

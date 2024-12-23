@@ -1,10 +1,10 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import supabase from "../config/supabaseClient";
 
-const AuthContext = createContext({ session:null, user:null, signOut: () => {} });
+const AuthContext = createContext({ session:null, authUser:null, signOut: () => {} });
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState()
+    const [authUser, setAuthUser] = useState()
     const [session, setSession] = useState();
     const [loading, setLoading] = useState(true);
 
@@ -13,13 +13,13 @@ export const AuthProvider = ({ children }) => {
             const { data: { session }, error } = await supabase.auth.getSession();
             if (error) throw error;
             setSession(session)
-            setUser(session?.user)
+            setAuthUser(session?.user)
             setLoading(false);
         };
 
         const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
             setSession(session);
-            setUser(session?.user)
+            setAuthUser(session?.user)
             setLoading(false)
         });
 
@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
 
     const value = {
         session,
-        user,
+        authUser,
         loading,
         signOut: () => supabase.auth.signOut(),
     };
