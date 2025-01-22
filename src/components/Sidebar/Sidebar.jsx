@@ -4,14 +4,16 @@ import { CreatePostLogo, InstagramLogo, InstagramMobileLogo, NotificationsLogo, 
 import { BiLogOut } from "react-icons/bi";
 import { AiFillHome } from "react-icons/ai";
 import { useAuth } from "../../contexts/AuthContext";
+import { useAuthUserProfile } from "../../contexts/userProfileContext";
 // import useSignout from "../../hooks/useSignout"; // decided not to use this hook
 
 
 const Sidebar = () => {
 
   const { signOut } = useAuth();
-
+  
   const sidebarItems = [
+    
       {
           icon: <AiFillHome size={25} />,
           text: "Home",
@@ -30,9 +32,9 @@ const Sidebar = () => {
           text: "Create Post"
       },
       {
-          icon: <Avatar size={"sm"} name="Roger Galan" src="profilepic.png" />,
+          icon: <Avatar size={"sm"} name="Roger Galan" src="rawwyurr2.png" />,
           text: "Profile",
-          link: "/asaprogrammer"
+          link: "enter-your-username-here-to-get-to-profile-page"
       }
   ]
 
