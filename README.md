@@ -1,15 +1,17 @@
-# React + Vite
+# Social Media Clone - Full Stack App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is meant to replicate various features found in an image sharing
+platform. CRUD operations are demonstrated through the ability to make and remove
+posts. Various features are currently not functioning properly since this project
+is still a work in progress
 
-Currently, two official plugins are available:
+Though this project is based off an existing coding tutorial, I stretched my
+abilities by going off the script and utilizing a different BaaS, Supabase. This
+has caused me to also implement features outside of the tutorial which includes creating custom React Context components and custom React Hooks. I've had to learn
+how to store data in local storage and write files to a database. Using the ChakraUI styling framework simplified my production speed and although it abstract the styling process it has helped me to understand CSS flexboxes, input fields, and other CSS properties. Creating SQL queries in javasript with Supabase database methods was a great experience as to how database data can be transferred and displayed.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-
+## Reference Material
 npm run dev
-ctrl c 
 4:55:00
 
 Front End Resources
