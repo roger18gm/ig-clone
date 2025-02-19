@@ -11,7 +11,7 @@ const AuthForm = () => {
     <>
       <Box border={"1px solid gray"} borderRadius={4} padding={5}>
         <VStack spacing={4}>
-          <Image src="/iglogo.png" h={24} cursor="pointer" alt="Insta Logo" />
+          <Image src="/tabbinlogo.png" h={24} cursor="pointer" alt="Insta Logo" />
 
         {/* Display form to Sign up or log in with email and password */}
         {isLogin ? <Login /> : <Signup />}

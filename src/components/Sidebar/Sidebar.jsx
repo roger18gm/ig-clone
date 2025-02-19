@@ -1,6 +1,6 @@
 import { Avatar, Box, Button, Flex, Link, Text, Tooltip } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
-import { CreatePostLogo, InstagramLogo, InstagramMobileLogo, NotificationsLogo, SearchLogo } from "../../assets/constants";
+import { CreatePostLogo, InstagramLogo, InstagramMobileLogo, NotificationsLogo, SearchLogo, TabbinLogo } from "../../assets/constants";
 import { BiLogOut } from "react-icons/bi";
 import { AiFillHome } from "react-icons/ai";
 import { useAuth } from "../../contexts/AuthContext";
@@ -9,7 +9,8 @@ import { useAuthUserProfile } from "../../contexts/userProfileContext";
 
 
 const Sidebar = () => {
-
+  
+  const { authProfile } = useAuthUserProfile(); // auth user profile details
   const { signOut } = useAuth();
   
   const sidebarItems = [
@@ -34,7 +35,7 @@ const Sidebar = () => {
       {
           icon: <Avatar size={"sm"} name="Roger Galan" src="rawwyurr2.png" />,
           text: "Profile",
-          link: "enter-your-username-here-to-get-to-profile-page"
+          link: `${authProfile?.username}`
       }
   ]
 
@@ -57,7 +58,7 @@ const Sidebar = () => {
           display={{ base: "none", md: "block" }}
           cursor="pointer"
         >
-          <InstagramLogo />
+          <TabbinLogo />
         </Link>
 
         <Link
